@@ -1,6 +1,5 @@
 import Vue from 'nativescript-vue';
 import Login from './components/Login';
-import List from './components/List';
 import RadChartPlugin from 'nativescript-ui-chart/vue';
 import VueDevtools from 'nativescript-vue-devtools';
 import './app.scss';
@@ -18,5 +17,5 @@ Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer')
 Vue.config.silent = (TNS_ENV === 'production')
 
 new Vue({
-  render: h => h('frame', [h(List)])
+  render: h => h('frame', [h(Login)])
 }).$start()
