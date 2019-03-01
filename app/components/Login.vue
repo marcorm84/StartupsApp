@@ -15,10 +15,6 @@
             <TextField v-model="passwordInput" hint="Password" secure="true" class="form-input"/>
           </FlexboxLayout>
           <Button text="Login" @tap="onButtonTap" class="my-button"/>
-          <FlexboxLayout alignItems="center" justifyContent="space-between" class="auth-buttons">
-            <Label horizontalAlignment="left" text="Create Accountt"/>
-            <Label horizontalAlignment="right" text="Forgot Password"/>
-          </FlexboxLayout>
         </StackLayout>
       </FlexboxLayout>
     </Gradient>
