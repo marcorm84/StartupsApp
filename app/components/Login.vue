@@ -67,18 +67,6 @@ export default {
 .icon-margin {
   margin-right: 10;
 }
-.my-button {
-  background-color: #53ba82;
-  color: white;
-  font-weight: bold;
-  border-radius: 25;
-  padding-top: 14;
-  padding-bottom: 14;
-  text-transform: uppercase;
-  letter-spacing: 0.1;
-  margin-bottom: 20;
-  margin-top: 10;
-}
 .auth-buttons {
   color: white;
   font-size: 14;

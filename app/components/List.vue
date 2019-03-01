@@ -3,14 +3,20 @@
   <Page class="page">
     <ActionBar>
       <GridLayout width="100%" columns="auto, *">
-        <Label text="MENU" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
+        <Image
+          src="~/assets/images/menu.png"
+          width="30"
+          height="30"
+          class="icon-margin"
+          @tap="$refs.drawer.nativeView.showDrawer()"
+        />
         <Label class="title" text="Listado de StartUps" col="1"/>
       </GridLayout>
     </ActionBar>
     <!--<PullToRefresh @refresh="refreshList">-->
     <RadSideDrawer ref="drawer">
       <StackLayout ~drawerContent backgroundColor="#ffffff">
-        <Label class="drawer-header" text="Drawer"/>
+        <Label class="drawer-header" text="Menu"/>
         <Label class="drawer-item" text="Home" android:clickable="true"/>
         <Label
           class="drawer-item"
@@ -21,10 +27,8 @@
         />
         <Label class="drawer-item" @tap="goRelations" text="Relaciones"/>
       </StackLayout>
-      <!-- <ScrollView ~mainContent> -->
       <StackLayout ~mainContent class="home-panel">
         <SearchBar hint="Buscar.." v-model="search" class="search-bar"/>
-        <!--Add your page content here-->
         <ListView
           class="list-group"
           for="startup in filteredList"
@@ -36,18 +40,19 @@
             <StackLayout class="list-group-item">
               <Label :text="startup.gsx$nombre.$t" class="list-group-item-heading"/>
               <FlexboxLayout flexDirection="row" class="list-group-item">
-                <Label text="Industria:" style="width: 30%;" class="list-group-item-text"/>
                 <Label
-                  :text="startup.gsx$industria.$t"
-                  style="width: 70%;"
+                  :text="`#${startup.gsx$industria.$t}`"
+                  style="width: 30%;"
                   class="list-group-item-text"
                 />
-              </FlexboxLayout>
-              <FlexboxLayout flexDirection="row" class="list-group-item">
-                <Label text="País:" style="width: 30%;" class="list-group-item-text"/>
                 <Label
-                  :text="startup.gsx$país.$t"
-                  style="width: 70%;"
+                  :text="`#${startup.gsx$tipodesolución.$t}`"
+                  style="width: 30%;"
+                  class="list-group-item-text"
+                />
+                <Label
+                  :text="`#${startup.gsx$país.$t}`"
+                  style="width: 30%;"
                   class="list-group-item-text"
                 />
               </FlexboxLayout>
@@ -55,7 +60,6 @@
           </v-template>
         </ListView>
       </StackLayout>
-      <!-- </ScrollView> -->
     </RadSideDrawer>
     <!--</PullToRefresh>-->
   </Page>
@@ -72,13 +76,15 @@ export default {
     return {
       startups: [],
       search: "",
-      dataCountries: []
+      dataCountries: [],
+      dataIndustries: [],
+      dataSolutions: []
     };
   },
   mounted() {
     axios
       .get(
-        "https://spreadsheets.google.com/feeds/list/1JnYXU7N3XzIBbMMnpyt_vxiWMUwpakR51is4LE50omg/ow12h9z/public/values?alt=json"
+        "https://spreadsheets.google.com/feeds/list/1KSe1V27k_RY4cE7gIcUJD0Kaca9uRyQKNdoTLLVisj0/od6/public/values?alt=json"
       )
       .then(response => {
         this.startups = response.data.feed.entry;
@@ -89,10 +95,13 @@ export default {
         const industries = [
           ...new Set(this.startups.map(st => st.gsx$industria.$t))
         ];
-        this.dataCountries = countries.map(c => {
-          const count = this.startups.filter(st => st.gsx$país.$t === c);
-          return { key: c, value: count.length };
-        });
+        this.dataCountries = this.setStadistics(countries, "gsx$país");
+        this.dataIndustries = this.setStadistics(industries, "gsx$industria");
+        this.dataSolutions = this.setStadistics(
+          solutions,
+          "gsx$tipodesolución"
+        );
+
         console.log(dataCountries, "PAISES");
       });
   },
@@ -104,13 +113,21 @@ export default {
         }
       });
     },
+    setStadistics: function(array, key) {
+      return array.map(c => {
+        const count = this.startups.filter(st => st[key].$t === c);
+        return { key: c, value: count.length };
+      });
+    },
     goFavorites: function() {
       this.$navigateTo(Favorites);
     },
     goRelations: function() {
       this.$navigateTo(Relations, {
         props: {
-          data: this.dataCountries
+          countries: this.dataCountries,
+          industries: this.dataIndustries,
+          solutions: this.dataSolutions
         }
       });
     }
@@ -136,7 +153,9 @@ export default {
 .search-bar {
   background-color: #ffffff;
 }
-
+label {
+  color: #ffffff;
+}
 .title {
   text-align: left;
   padding-left: 16;

@@ -4,7 +4,6 @@
     <ActionBar title="Detalle" android:flat="true"/>
     <ScrollView>
       <StackLayout class="home-panel">
-        <!--Add your page content here-->
         <StackLayout class="container">
           <Label :text="data.gsx$nombre.$t" class="title"/>
           <FlexboxLayout alignItems="center" class="border-bottom">
@@ -75,27 +74,5 @@ label {
   font-size: 25;
   font-weight: bold;
   margin-bottom: 30;
-}
-ActionBar {
-  background-color: #53ba82;
-  color: #ffffff;
-}
-.message {
-  vertical-align: center;
-  text-align: center;
-  font-size: 20;
-  color: #333333;
-}
-.my-button {
-  background-color: #53ba82;
-  color: white;
-  font-weight: bold;
-  border-radius: 25;
-  padding-top: 14;
-  padding-bottom: 14;
-  text-transform: uppercase;
-  letter-spacing: 0.1;
-  margin-bottom: 20;
-  margin-top: 10;
 }
 </style>

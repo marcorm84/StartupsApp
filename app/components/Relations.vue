@@ -1,64 +1,42 @@
 <template>
   <Page>
-    <StackLayout>
-      <RadPieChart height="300" allowAnimation="true" row="0">
-        <PieSeries
-          v-tkPieSeries
-          selectionMode="DataPoint"
-          expandRadius="0.4"
-          outerRadiusFactor="0.7"
-          valueProperty="value"
-          legendLabel="key"
-          :items="items"
-        />
-
-        <RadLegendView
-          v-tkPieLegend
-          position="Right"
-          title="Brands"
-          offsetOrigin="TopRight"
-          width="110"
-          enableSelection="true"
-        ></RadLegendView>
-      </RadPieChart>
-
-      <RadPieChart height="300" allowAnimation="true" row="1">
-        <DonutSeries
-          v-tkPieSeries
-          selectionMode="DataPoint"
-          expandRadius="0.4"
-          outerRadiusFactor="0.7"
-          innerRadiusFactor="0.4"
-          valueProperty="value"
-          legendLabel="key"
-          :items="items"
-        />
-
-        <RadLegendView
-          v-tkPieLegend
-          position="Right"
-          title="Brands"
-          offsetOrigin="TopRight"
-          width="110"
-          enableSelection="true"
-        ></RadLegendView>
-      </RadPieChart>
-    </StackLayout>
+    <ActionBar title="Relaciones" android:flat="true"/>
+    <TabView
+      android:tabBackgroundColor="#53ba82"
+      android:tabTextColor="#c4ffdf"
+      android:selectedTabTextColor="#ffffff"
+      androidSelectedTabHighlightColor="#ffffff"
+    >
+      <TabViewItem title="Paises">
+        <Chart :items="countries" title="Paises"/>
+      </TabViewItem>
+      <TabViewItem title="Industrias">
+        <Chart :items="industries" title="Industrias"/>
+      </TabViewItem>
+      <TabViewItem title="Soluciones">
+        <Chart :items="solutions" title="Soluciones"/>
+      </TabViewItem>
+    </TabView>
   </Page>
 </template>
 
 <script>
 import { ObservableArray } from "tns-core-modules/data/observable-array";
+import Chart from "./Chart";
 
 export const getCountriesData = data => {
   return new ObservableArray(data);
 };
 
 export default {
-  props: ["data"],
+  components: { Chart },
+  props: ["countries", "industries", "solutions"],
   data() {
+    const { countries, industries, solutions } = this;
     return {
-      items: getCountriesData(this.data)
+      countries: getCountriesData(solutions),
+      industries: getCountriesData(industries),
+      solutions: getCountriesData(solutions)
     };
   }
 };

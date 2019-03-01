@@ -16,18 +16,19 @@
             <StackLayout class="list-group-item">
               <Label :text="startup.gsx$nombre.$t" class="list-group-item-heading"/>
               <FlexboxLayout flexDirection="row" class="list-group-item">
-                <Label text="Industria:" style="width: 30%;" class="list-group-item-text"/>
                 <Label
-                  :text="startup.gsx$industria.$t"
-                  style="width: 70%;"
+                  :text="`#${startup.gsx$industria.$t}`"
+                  style="width: 30%;"
                   class="list-group-item-text"
                 />
-              </FlexboxLayout>
-              <FlexboxLayout flexDirection="row" class="list-group-item">
-                <Label text="País:" style="width: 30%;" class="list-group-item-text"/>
                 <Label
-                  :text="startup.gsx$país.$t"
-                  style="width: 70%;"
+                  :text="`#${startup.gsx$tipodesolución.$t}`"
+                  style="width: 30%;"
+                  class="list-group-item-text"
+                />
+                <Label
+                  :text="`#${startup.gsx$país.$t}`"
+                  style="width: 30%;"
                   class="list-group-item-text"
                 />
               </FlexboxLayout>
